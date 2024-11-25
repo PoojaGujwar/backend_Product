@@ -7,7 +7,7 @@ const productSchema = new mongoose.Schema({
     rating: Number,
     price:Number,
     imageUrl:String,
-    isWisilist:Boolean,
+    isWishlist:Boolean,
 })
 
 const Products = mongoose.model("Products",productSchema)

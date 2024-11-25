@@ -17,7 +17,7 @@ const newData ={
     rating: 3,
     price:1211,
     imageUrl:'https://m.media-amazon.com/images/I/31x-Xz8TkbL._SX300_SY300_QL70_FMwebp_.jpg',
-    isWisilist:false,
+    isWishlist:false,
 }
 async function seedData (newData){
 try{
@@ -27,7 +27,8 @@ console.log(save)
 }catch(error){
     throw error
 }
-}seedData(newData)
+}
+//seedData(newData)
 
 app.get("/",(req,res)=>{
     res.send("Hello, Epress")
@@ -77,7 +78,34 @@ app.get("/products/ratings/:rating", async(req,res)=>{
         res.status(500).json({error:"Internal server error"})
     }
 })
-
+app.get("/products/isWishlist/:wishlist",async(req,res)=>{
+    const wishlistValue = req.params.wishlist
+    
+    try{
+const products = await Products.find({isWishlist:wishlistValue})
+if(products.length !=0){
+    res.json(products)
+}else{
+    res.status(404).json({error:"No product found"})
+}
+    }catch(error){
+        res.status(500).json({error:"Internal server error"})
+    }
+})
+app.put("/products/:id",async(req,res)=>{
+    const productId = req.params.id
+    const updateData = req.body
+try{
+    const updatedProducts = await Products.findByIdAndUpdate(productId,updateData,{new:true})
+    console.log(updatedProducts)
+    if(!updatedProducts){
+        return res.status(404).json({message:"Product not found"})
+    }
+    res.status(202).json(updatedProducts)
+}catch(error){
+    res.status(500).json({error:"Internal server error"})
+}
+})
 app.post("/products",async(req, res)=>{
 
     const product = req.body
