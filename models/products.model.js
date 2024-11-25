@@ -6,7 +6,8 @@ const productSchema = new mongoose.Schema({
     category : String,
     rating: Number,
     price:Number,
-    imageUrl:String
+    imageUrl:String,
+    isWisilist:Boolean,
 })
 
 const Products = mongoose.model("Products",productSchema)

@@ -10,6 +10,25 @@ app.use(express.json())
 
 initializeDatabase()
 
+const newData ={
+    title:"electronic",
+    description :"String",
+    category : "kids",
+    rating: 3,
+    price:1211,
+    imageUrl:'https://m.media-amazon.com/images/I/31x-Xz8TkbL._SX300_SY300_QL70_FMwebp_.jpg',
+    isWisilist:false,
+}
+async function seedData (newData){
+try{
+const data = new Products(newData)
+const save = await data.save()
+console.log(save)
+}catch(error){
+    throw error
+}
+}seedData(newData)
+
 app.get("/",(req,res)=>{
     res.send("Hello, Epress")
 })
@@ -58,11 +77,15 @@ app.get("/products/ratings/:rating", async(req,res)=>{
         res.status(500).json({error:"Internal server error"})
     }
 })
+
 app.post("/products",async(req, res)=>{
+
     const product = req.body
+    
     try{
         const products = new Products(product)
         await products.save()
+        console.log(products)
         res.status(201).json({message:"Product added successfully",product:products})
     }catch(error){
         res.status(500).json({error:"Internal server error"})
