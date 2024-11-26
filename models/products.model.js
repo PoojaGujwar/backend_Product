@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
     price:Number,
     imageUrl:String,
     isWishlist:Boolean,
+    isCart:Boolean,
 })
 
 const Products = mongoose.model("Products",productSchema)

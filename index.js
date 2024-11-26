@@ -11,13 +11,14 @@ app.use(express.json())
 initializeDatabase()
 
 const newData ={
-    title:"electronic",
-    description :"String",
-    category : "kids",
+    title:"Buy AirPods Max",
+    description :"Requires AirPods Max with the latest version of software, and iPhone and iPod touch models with the latest version of iOS",
+    category : "electronic",
     rating: 3,
     price:1211,
-    imageUrl:'https://m.media-amazon.com/images/I/31x-Xz8TkbL._SX300_SY300_QL70_FMwebp_.jpg',
+    imageUrl:'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/airpods-max-select-202409-blue_FV1?wid=976&hei=916&fmt=jpeg&qlt=90&.v=1724927052173',
     isWishlist:false,
+    isCart: false
 }
 async function seedData (newData){
 try{
@@ -28,7 +29,7 @@ console.log(save)
     throw error
 }
 }
-//seedData(newData)
+seedData(newData)
 
 app.get("/",(req,res)=>{
     res.send("Hello, Epress")
