@@ -18,7 +18,8 @@ const newData ={
     price:1211,
     imageUrl:'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/airpods-max-select-202409-blue_FV1?wid=976&hei=916&fmt=jpeg&qlt=90&.v=1724927052173',
     isWishlist:false,
-    isCart: false
+    isCart: false,
+    quantity:0
 }
 async function seedData (newData){
 try{

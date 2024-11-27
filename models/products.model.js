@@ -7,8 +7,18 @@ const productSchema = new mongoose.Schema({
     rating: Number,
     price:Number,
     imageUrl:String,
-    isWishlist:Boolean,
-    isCart:Boolean,
+    isWishlist:{
+        type:Boolean,
+        default:false
+    },
+    isCart:{
+     type:Boolean,
+     default:false   
+    },
+    quantity:{
+        type:Number,
+        default:0
+    }
 })
 
 const Products = mongoose.model("Products",productSchema)
