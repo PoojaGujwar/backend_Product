@@ -4,6 +4,7 @@ const app = express()
 
 const {initializeDatabase} = require("./db/db.connection")
 const { Products } = require("./models/products.model")
+const {Address} = require("./models/address.model")
 
 app.use(cors());
 app.use(express.json())
@@ -11,26 +12,37 @@ app.use(express.json())
 initializeDatabase()
 
 const newData ={
-    title:"Buy AirPods Max",
-    description :"Requires AirPods Max with the latest version of software, and iPhone and iPod touch models with the latest version of iOS",
-    category : "electronic",
-    rating: 3,
-    price:1211,
-    imageUrl:'https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/airpods-max-select-202409-blue_FV1?wid=976&hei=916&fmt=jpeg&qlt=90&.v=1724927052173',
-    isWishlist:false,
-    isCart: false,
-    quantity:0
+   firstName:"John",
+   lastName:"Doe",
+   phoneNumber:1243567891,
+   email:"johndoe@gmail.com",
+   address1:"48/2 kolkata",
+   address2:"",
+   city:"kolkata",
+   street:"kolkata",
+   zipCode:700001,
+    author:'6747fc9425d53f0120006e8e'
 }
 async function seedData (newData){
 try{
-const data = new Products(newData)
+const data = new Address(newData)
 const save = await data.save()
-console.log(save)
 }catch(error){
     throw error
 }
 }
-seedData(newData)
+//seedData(newData)
+
+async function getAllAddress(){
+    try{
+        const products = await Address.find().populate("author")
+        console.log(products)
+
+    }catch(error){
+        console.log(error)
+    }
+}
+//getAllAddress()
 
 app.get("/",(req,res)=>{
     res.send("Hello, Epress")
@@ -82,7 +94,6 @@ app.get("/products/ratings/:rating", async(req,res)=>{
 })
 app.get("/products/isWishlist/:wishlist",async(req,res)=>{
     const wishlistValue = req.params.wishlist
-    
     try{
 const products = await Products.find({isWishlist:wishlistValue})
 if(products.length !=0){
@@ -122,6 +133,50 @@ app.post("/products",async(req, res)=>{
     }
 })
 
+app.get("/address",async(req, res)=>{
+    try{
+        const newData = await Address.find().populate("author")
+        res.json(newData)
+    }catch(error){
+        res.status(500).json({error:"Internal server error"})
+    }
+})
+app.put("/address/:id",async(req,res)=>{
+    const addressId = req.params.id
+    const newAddress = req.body
+    try{
+        const data = await Address.findByIdAndUpdate(addressId,newAddress,{new:true})
+        if(!data){
+            return res.status(404).json({message:"Address not found"})
+        }
+        res.status(200).json(data)
+    }catch(error){
+        res.status(500).json({error:"Internal server error"})
+    }
+})
+app.post("/address",async(req, res)=>{
+
+    try{
+        const newInfo =  new Address(req.body)
+        await newInfo.save()
+        res.status(201).json(newInfo)
+        console.log(newInfo)
+    }catch(error){
+        res.status(500).json({error:"Internal server error"})
+    }
+})
+app.delete("/address/:id",async(req, res)=>{
+    const addressId = req.params.id
+    try{
+        const deleteAddress = await Address.findByIdAndDelete(addressId)
+        if(!deleteAddress){
+            return res.status(404).json({message:"Address not found"})
+        }
+        res.status(200).json({message:"Address deleted successfully", address:deleteAddress})
+    }catch(error){
+        res.status(500).json({error:"Internal server error"})
+    }
+})
 const PORT = 3000;
 app.listen(PORT,()=>{console.log(`Serever is running on Port ${PORT}`)})
 
