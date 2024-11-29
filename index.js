@@ -16,17 +16,20 @@ const newData ={
    lastName:"Doe",
    phoneNumber:1243567891,
    email:"johndoe@gmail.com",
-   address1:"48/2 kolkata",
-   address2:"",
-   city:"kolkata",
-   street:"kolkata",
-   zipCode:700001,
+   address:[{
+    address:"Kolkata bajar",
+    city:"kolkata",
+    street:"kolkata",
+    zipCode:700001,
+}],
+   
     author:'6747fc9425d53f0120006e8e'
 }
 async function seedData (newData){
 try{
 const data = new Address(newData)
 const save = await data.save()
+console.log(save)
 }catch(error){
     throw error
 }
@@ -35,14 +38,12 @@ const save = await data.save()
 
 async function getAllAddress(){
     try{
-        const products = await Address.find().populate("author")
-        console.log(products)
-
+        const addresses = await Address.find().populate("author")
     }catch(error){
         console.log(error)
     }
 }
-//getAllAddress()
+getAllAddress()
 
 app.get("/",(req,res)=>{
     res.send("Hello, Epress")
@@ -166,9 +167,13 @@ try{
 })
 app.delete("/address/:id",async(req, res)=>{
     const addressId = req.params.id
-    const dltProperties = req.body
     try{
-        const deleteAddress = await Address.findByIdAndUpdate(addressId,{dltProperties:''},{new:true})
+        const deleteAddress = await Address.findOneAndUpdate(
+                    { "address._id": addressId }, 
+                    { $pull: { address: { _id: addressId } } },  
+                    { new: true }
+                );  
+        console.log(deleteAddress)
         if(!deleteAddress){
             return res.status(404).json({message:"Address not found"})
         }
