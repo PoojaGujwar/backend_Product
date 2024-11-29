@@ -10,22 +10,21 @@ phoneNumber: {
   },
 email:String,
 address:[{
-address:{
-    type:String,
-    require:true
-},
-state:{
-    type:String,
-    require:true
-},
-city:{
-type: String,
-require:true
-},
-zipCode:{
-type:String,
-require:true
-}
+    address:{
+        type:String,
+    },
+    zipCode:{
+        type:String,
+        require:true
+    },
+    state:{
+        type:String,
+        require:true
+    },
+    city:{
+        type:String,
+        require:true
+    }
 }],
 author:{type:mongoose.Schema.Types.ObjectId,ref:"Products"},
 },{timestamps:true})

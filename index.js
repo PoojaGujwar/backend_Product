@@ -43,7 +43,7 @@ async function getAllAddress(){
         console.log(error)
     }
 }
-getAllAddress()
+//getAllAddress()
 
 app.get("/",(req,res)=>{
     res.send("Hello, Epress")
@@ -146,7 +146,11 @@ app.put("/address/:id",async(req,res)=>{
     const addressId = req.params.id
     const newAddress = req.body
     try{
-        const data = await Address.findByIdAndUpdate(addressId,newAddress,{new:true})
+        const data = await Address.findOneAndUpdate({ "address._id": addressId }, 
+            { $set: {"address.$": newAddress } },  
+            { new: true }
+        )
+        console.log(data)
         if(!data){
             return res.status(404).json({message:"Address not found"})
         }
