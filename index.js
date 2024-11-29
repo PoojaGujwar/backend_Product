@@ -155,8 +155,7 @@ app.put("/address/:id",async(req,res)=>{
     }
 })
 app.post("/address",async(req, res)=>{
-
-    try{
+try{
         const newInfo =  new Address(req.body)
         await newInfo.save()
         res.status(201).json(newInfo)
@@ -167,8 +166,9 @@ app.post("/address",async(req, res)=>{
 })
 app.delete("/address/:id",async(req, res)=>{
     const addressId = req.params.id
+    const dltProperties = req.body
     try{
-        const deleteAddress = await Address.findByIdAndDelete(addressId)
+        const deleteAddress = await Address.findByIdAndUpdate(addressId,{dltProperties:''},{new:true})
         if(!deleteAddress){
             return res.status(404).json({message:"Address not found"})
         }
