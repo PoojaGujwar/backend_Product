@@ -7,6 +7,10 @@ const productSchema = new mongoose.Schema({
     rating: Number,
     price:Number,
     imageUrl:String,
+    likes:{
+        type:Number,
+        default:0
+    },
     isWishlist:{
         type:Boolean,
         default:false

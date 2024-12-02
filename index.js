@@ -12,22 +12,20 @@ app.use(express.json())
 initializeDatabase()
 
 const newData ={
-   firstName:"John",
-   lastName:"Doe",
-   phoneNumber:1243567891,
-   email:"johndoe@gmail.com",
-   address:[{
-    address:"Kolkata bajar",
-    city:"kolkata",
-    street:"kolkata",
-    zipCode:700001,
-}],
-   
-    author:'6747fc9425d53f0120006e8e'
+    title:"String",
+    description :"String",
+    category : "String",
+    rating: 3,
+    price:1243123412,
+    imageUrl:"String",
+    likes:1,
+    isWishlist:true,
+    isCart:false ,  
+    quantity:1
 }
 async function seedData (newData){
 try{
-const data = new Address(newData)
+const data = new Products(newData)
 const save = await data.save()
 console.log(save)
 }catch(error){
