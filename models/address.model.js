@@ -9,7 +9,7 @@ phoneNumber: {
     match: [/^\d{10}$/, 'Please enter a valid 10-digit phone number'],
   },
 email:String,
-address:[{
+address:{
     address:{
         type:String,
     },
@@ -25,7 +25,7 @@ address:[{
         type:String,
         require:true
     }
-}],
+},
 author:{type:mongoose.Schema.Types.ObjectId,ref:"Products"},
 },{timestamps:true})
 

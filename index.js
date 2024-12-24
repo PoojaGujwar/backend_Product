@@ -134,7 +134,7 @@ app.post("/products",async(req, res)=>{
 
 app.get("/address",async(req, res)=>{
     try{
-        const newData = await Address.find().populate("author")
+        const newData = await Address.find()
         res.json(newData)
     }catch(error){
         res.status(500).json({error:"Internal server error"})
@@ -142,11 +142,9 @@ app.get("/address",async(req, res)=>{
 })
 app.put("/address/:id",async(req,res)=>{
     const addressId = req.params.id
-    const newAddress = req.body
+    const updatedData = req.body
     try{
-        const data = await Address.findOneAndUpdate({ "address._id": addressId }, 
-            { $set: {"address.$": newAddress } },  
-            { new: true }
+        const data = await Address.findByIdAndUpdate(addressId, updatedData,{new: true}
         )
         console.log(data)
         if(!data){
@@ -170,11 +168,7 @@ try{
 app.delete("/address/:id",async(req, res)=>{
     const addressId = req.params.id
     try{
-        const deleteAddress = await Address.findOneAndUpdate(
-                    { "address._id": addressId }, 
-                    { $pull: { address: { _id: addressId } } },  
-                    { new: true }
-                );  
+        const deleteAddress = await Address.findByIdAndDelete(addressId );  
         console.log(deleteAddress)
         if(!deleteAddress){
             return res.status(404).json({message:"Address not found"})
