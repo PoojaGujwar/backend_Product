@@ -12,8 +12,11 @@ app.use(express.json())
 initializeDatabase()
 
 const newData ={
+    name:"String",
     title:"String",
     description :"String",
+    color:"Pink",
+    size:"s",
     category : "String",
     rating: 3,
     price:1243123412,
@@ -32,7 +35,7 @@ console.log(save)
     throw error
 }
 }
-//seedData(newData)
+seedData(newData)
 
 async function getAllAddress(){
     try{
