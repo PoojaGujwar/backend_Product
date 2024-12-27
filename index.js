@@ -11,39 +11,33 @@ app.use(express.json())
 
 initializeDatabase()
 
-const newData ={
-    name:"String",
-    title:"String",
-    description :"String",
-    color:"Pink",
-    size:"s",
-    category : "String",
-    rating: 3,
-    price:1243123412,
-    imageUrl:"String",
-    likes:1,
-    isWishlist:true,
-    isCart:false ,  
-    quantity:1
-}
-async function seedData (newData){
-try{
-const data = new Products(newData)
-const save = await data.save()
-console.log(save)
-}catch(error){
-    throw error
-}
-}
-seedData(newData)
+// const newData ={
+//     name:"String",
+//     title:"String",
+//     description :"String",
+//     color:"Pink",
+//     size:"s",
+//     category : "String",
+//     rating: 3,
+//     price:1243123412,
+//     imageUrl:"String",
+//     likes:1,
+//     isWishlist:true,
+//     isCart:false ,  
+//     quantity:1
+// }
+// async function seedData (newData){
+// try{
+// const data = new Products(newData)
+// const save = await data.save()
+// console.log(save)
+// }catch(error){
+//     throw error
+// }
+// }
+//seedData(newData)
 
-async function getAllAddress(){
-    try{
-        const addresses = await Address.find().populate("author")
-    }catch(error){
-        console.log(error)
-    }
-}
+
 //getAllAddress()
 
 app.get("/",(req,res)=>{
